@@ -15,7 +15,10 @@ import subprocess
 import sys
 import tempfile
 
-import fitz  # PyMuPDF
+try:
+    import pymupdf as fitz          # PyMuPDF >= 1.24
+except ImportError:                 # 旧版本只有 fitz
+    import fitz
 
 import env
 
@@ -110,9 +113,7 @@ def main():
                    figs={"1": os.path.join(tmp, "figs", "fig01.png")}),
               open(book, "w", encoding="utf-8"), ensure_ascii=False)
 
-    sys.path.insert(0, HERE)
-    import doctor
-    if not doctor.find_browser():
+    if not env.find_browser():
         print("[4/4] 跳过 PDF 渲染：未找到 Chrome/Edge（抽取链路已验证）")
     else:
         run(os.path.join(HERE, "build_pdf.py"), book)

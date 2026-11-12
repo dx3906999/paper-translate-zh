@@ -182,7 +182,10 @@ def find_chrome(explicit=None):
 
 
 def add_toc(pdf_path, headings, meta):
-    import fitz
+    try:
+        import pymupdf as fitz
+    except ImportError:
+        import fitz
     doc = fitz.open(pdf_path)
     pages = [p.get_text().replace("\n", "") for p in doc]
     toc, cursor = [], 0

@@ -5,7 +5,10 @@
 """
 import re
 
-import fitz
+try:
+    import pymupdf as fitz          # PyMuPDF >= 1.24
+except ImportError:                 # 旧版本只有 fitz
+    import fitz
 
 CAP_PATTERNS = [
     ("fig-dot", r"^Fig(?:ure)?\.?\s*(\d+)\s*[:.]"),      # Fig. 1: / Figure 1.

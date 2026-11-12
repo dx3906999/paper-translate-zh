@@ -21,7 +21,10 @@ import os
 import re
 import sys
 
-import fitz
+try:
+    import pymupdf as fitz          # PyMuPDF >= 1.24
+except ImportError:                 # 旧版本只有 fitz
+    import fitz
 
 import env
 

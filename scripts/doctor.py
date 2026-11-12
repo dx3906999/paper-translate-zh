@@ -58,7 +58,9 @@ def main():
     ap.add_argument("--json", action="store_true")
     a = ap.parse_args()
 
-    fitz_v, fitz_err = module_version("fitz")
+    fitz_v, fitz_err = module_version("pymupdf")
+    if not fitz_v:
+        fitz_v, fitz_err = module_version("fitz")
     md_v, md_err = module_version("markdown")
     pil_v, pil_err = module_version("PIL")
     browser = env.find_browser()
