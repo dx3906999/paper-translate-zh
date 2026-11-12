@@ -1,5 +1,8 @@
 # paper-translate-zh
 
+[![selftest](https://github.com/dx3906999/paper-translate-zh/actions/workflows/selftest.yml/badge.svg)](https://github.com/dx3906999/paper-translate-zh/actions/workflows/selftest.yml)
+[![license: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
+
 把学术论文 PDF 翻成中文（或任何目标语言），并排成一份**可读的 A4 文档**：正文重排、插图回贴、表格重建、参考文献保留、自动生成书签。可选归档到文献管理器（Zotero 等）。
 
 一个 `SKILL.md` + 7 个脚本，既能给 AI agent 当 skill 用，也能当纯命令行工具跑。
@@ -21,7 +24,8 @@ PDF ──probe──▶ 版式/图注/切块计划
 ## 快速开始
 
 ```bash
-git clone <this repo> && cd paper-translate-zh
+git clone https://github.com/dx3906999/paper-translate-zh.git
+cd paper-translate-zh
 python -m pip install -r requirements.txt
 
 python scripts/doctor.py      # 环境自检：依赖 / 浏览器 / 中文字体
