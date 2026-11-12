@@ -18,6 +18,8 @@ import re
 
 import fitz
 
+import env
+
 import pdfcommon as pc
 
 SEC_NUM = re.compile(r"^(?:(?:[IVXLC]+|[A-Z]|[0-9]+)(?:\.[0-9]+)*\.)\s+[A-Z\u4e00-\u9fff]")
@@ -97,6 +99,7 @@ def chunk_plan(doc, heads, target=12000):
 
 
 def main():
+    env.utf8_stdio()
     ap = argparse.ArgumentParser()
     ap.add_argument("pdf")
     ap.add_argument("--outdir", default=None)

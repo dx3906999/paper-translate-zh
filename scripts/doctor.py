@@ -1,56 +1,23 @@
 # -*- coding: utf-8 -*-
-"""doctor.py — 环境自检：Python、依赖、浏览器、字体。
+"""doctor.py — 环境自检：Python、依赖、浏览器、中文字体。
 
 用法:
     python doctor.py [--json]
 
-退出码: 0 全部就绪；1 缺必需项（缺 Pillow/浏览器只警告，不算失败）。
+退出码: 0 全部就绪；1 缺必需项（缺 Pillow / 浏览器只警告，不算失败）。
 """
 import argparse
 import importlib
 import json
 import os
 import platform
-import re
 import shutil
 import subprocess
 import sys
 
+import env
+
 SKILL_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-
-CHROME_CANDIDATES = [
-    # Windows
-    r"C:\Program Files\Google\Chrome\Application\chrome.exe",
-    r"C:\Program Files (x86)\Google\Chrome\Application\chrome.exe",
-    os.path.expandvars(r"%LOCALAPPDATA%\Google\Chrome\Application\chrome.exe"),
-    r"C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe",
-    r"C:\Program Files\Microsoft\Edge\Application\msedge.exe",
-    # macOS
-    "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome",
-    "/Applications/Microsoft Edge.app/Contents/MacOS/Microsoft Edge",
-    "/Applications/Chromium.app/Contents/MacOS/Chromium",
-    # Linux
-    "/usr/bin/google-chrome",
-    "/usr/bin/google-chrome-stable",
-    "/usr/bin/chromium",
-    "/usr/bin/chromium-browser",
-    "/usr/bin/microsoft-edge",
-    "/snap/bin/chromium",
-]
-
-CJK_FONTS = ["Noto Serif SC", "Noto Serif CJK SC", "Source Han Serif SC", "SimSun", "Songti SC"]
-
-
-def find_browser():
-    for p in CHROME_CANDIDATES:
-        if p and os.path.exists(p):
-            return p
-    for name in ("google-chrome", "chromium", "chromium-browser", "microsoft-edge",
-                 "chrome", "msedge"):
-        p = shutil.which(name)
-        if p:
-            return p
-    return None
 
 
 def module_version(name):
@@ -86,6 +53,7 @@ def has_cjk_font():
 
 
 def main():
+    env.utf8_stdio()
     ap = argparse.ArgumentParser()
     ap.add_argument("--json", action="store_true")
     a = ap.parse_args()
@@ -93,7 +61,7 @@ def main():
     fitz_v, fitz_err = module_version("fitz")
     md_v, md_err = module_version("markdown")
     pil_v, pil_err = module_version("PIL")
-    browser = find_browser()
+    browser = env.find_browser()
 
     info = dict(
         skill_dir=SKILL_DIR,

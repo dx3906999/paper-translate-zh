@@ -37,4 +37,4 @@ jobs:
         run: python scripts/selftest.py
 
       - name: Compile check
-        run: python -m py_compile scripts/*.py
+        run: python -m compileall -q scripts

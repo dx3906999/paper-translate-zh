@@ -43,6 +43,8 @@ import sys
 
 import markdown
 
+import env
+
 HERE = os.path.dirname(os.path.abspath(__file__))
 STYLE = os.path.join(HERE, "..", "assets", "style.css")
 
@@ -173,13 +175,10 @@ def prepare_part(part):
 def find_chrome(explicit=None):
     if explicit and os.path.exists(explicit):
         return explicit
-    for p in (r"C:\Program Files\Google\Chrome\Application\chrome.exe",
-              r"C:\Program Files (x86)\Google\Chrome\Application\chrome.exe",
-              r"C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe",
-              r"C:\Program Files\Microsoft\Edge\Application\msedge.exe"):
-        if os.path.exists(p):
-            return p
-    raise SystemExit("找不到 Chrome/Edge，请在 manifest 里给 chrome 路径")
+    found = env.find_browser()
+    if found:
+        return found
+    raise SystemExit("\u627e\u4e0d\u5230 Chrome/Edge\uff0c\u8bf7\u5728 manifest \u91cc\u7ed9 chrome \u8def\u5f84")
 
 
 def add_toc(pdf_path, headings, meta):
@@ -203,6 +202,7 @@ def add_toc(pdf_path, headings, meta):
 
 
 def main():
+    env.utf8_stdio()
     ap = argparse.ArgumentParser()
     ap.add_argument("manifest")
     ap.add_argument("--style", default=None, help="覆盖默认样式表（如 assets/style-compact.css）")

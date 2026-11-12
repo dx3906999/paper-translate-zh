@@ -17,6 +17,8 @@ import tempfile
 
 import fitz  # PyMuPDF
 
+import env
+
 HERE = os.path.dirname(os.path.abspath(__file__))
 PY = sys.executable
 
@@ -64,6 +66,7 @@ def run(*args, **kw):
 
 
 def main():
+    env.utf8_stdio()
     ap = argparse.ArgumentParser()
     ap.add_argument("--keep", action="store_true", help="保留临时目录便于排查")
     a = ap.parse_args()

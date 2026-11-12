@@ -23,6 +23,8 @@ import sys
 
 import fitz
 
+import env
+
 import pdfcommon as pc
 
 DEFAULT_CAP = r"^Fig(?:ure)?\.?\s*(\d+)\s*[:.]"
@@ -140,6 +142,7 @@ def clip_by_image(doc, outdir, dpi):
 
 
 def main():
+    env.utf8_stdio()
     ap = argparse.ArgumentParser()
     ap.add_argument("pdf")
     ap.add_argument("outdir")

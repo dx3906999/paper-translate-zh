@@ -15,8 +15,11 @@ import re
 
 import fitz
 
+import env
+
 
 def main():
+    env.utf8_stdio()
     ap = argparse.ArgumentParser()
     ap.add_argument("pdf")
     ap.add_argument("--src", help="原文 PDF，用来算页数比")
